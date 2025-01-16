@@ -36,6 +36,7 @@ const quizes = ref(dataQuiz);
 main {
   max-width: 900px;
   margin: 0 auto;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 header {
