@@ -1,8 +1,15 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import dataQuiz from "./data/quiz.json";
 
 const quizes = ref(dataQuiz);
+const search = ref("");
+
+watch(search, () => {
+  quizes.value = dataQuiz.filter((quiz) => {
+    return quiz.title.toLowerCase().includes(search.value.toLowerCase());
+  });
+});
 </script>
 
 <template>
@@ -14,6 +21,7 @@ const quizes = ref(dataQuiz);
         name="search-input"
         id="search-input"
         placeholder="Search Quiz..."
+        v-model.trim="search"
       />
     </header>
 
