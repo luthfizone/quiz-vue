@@ -1,4 +1,9 @@
-<script setup></script>
+<script setup>
+import { ref } from "vue";
+import dataQuiz from "./data/quiz.json";
+
+const quizes = ref(dataQuiz);
+</script>
 
 <template>
   <main>
@@ -14,14 +19,13 @@
 
     <!-- Quiz -->
     <section id="quiz-container">
-      <div class="card">
-        <div class="card-body">
-          <img
-            src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            alt="programming"
-          />
-          <h2>Programming</h2>
-          <p>2 Question</p>
+      <div v-for="quiz in quizes" :key="quiz.id">
+        <div class="card">
+          <div class="card-body">
+            <img :src="quiz.img" :alt="quiz.title" />
+            <h2>{{ quiz.title }}</h2>
+            <p>{{ quiz.questions.length }} Question</p>
+          </div>
         </div>
       </div>
     </section>
