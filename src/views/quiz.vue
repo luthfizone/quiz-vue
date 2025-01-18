@@ -10,6 +10,7 @@ const quizId = parseInt(route.params.id);
 const quiz = quizes.find((quiz) => {
   return quiz.id === quizId;
 });
+const numberOfCorrectAnswer = ref(0);
 
 const currentQuestionsIndex = ref(0);
 
@@ -22,6 +23,14 @@ const barPercentage = computed(() => {
     ((currentQuestionsIndex.value + 1) / quiz.questions.length) * 100
   }%`;
 });
+
+function onSelectedOption(option) {
+  if (option.correct) {
+    numberOfCorrectAnswer.value++;
+  }
+
+  currentQuestionsIndex.value++;
+}
 </script>
 
 <template>
@@ -29,15 +38,10 @@ const barPercentage = computed(() => {
   <QuizHeader :questionPage="questionPage" :barPercentage="barPercentage" />
 
   <!-- Quiz content -->
-  <QuizContent :question="quiz.questions[currentQuestionsIndex]" />
-
-  <!-- just for hardcode (will remove later) -->
-  <button
-    @click="currentQuestionsIndex++"
-    :disabled="currentQuestionsIndex === quiz.questions.length - 1"
-  >
-    Next
-  </button>
+  <QuizContent
+    :question="quiz.questions[currentQuestionsIndex]"
+    @selectOption="onSelectedOption"
+  />
 </template>
 
 <style scoped></style>

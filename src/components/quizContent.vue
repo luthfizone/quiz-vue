@@ -2,10 +2,15 @@
 import { computed } from "vue";
 
 const { question } = defineProps(["question"]);
+const emit = defineEmits(["selectOption"]);
 
 const options = computed(() => {
   return question.answers;
 });
+
+function emitSelectOption(option) {
+  emit("selectOption", option);
+}
 </script>
 
 <template>
@@ -16,7 +21,12 @@ const options = computed(() => {
 
   <!-- Option answer -->
   <div id="options-container">
-    <div class="option" v-for="option in options" :key="option.id">
+    <div
+      class="option"
+      v-for="option in options"
+      :key="option.id"
+      @click="emitSelectOption(option)"
+    >
       <p class="option-label">{{ option.label }}</p>
       <div class="option-value">{{ option.text }}</div>
     </div>
