@@ -1,24 +1,24 @@
-<script setup></script>
+<script setup>
+import { computed } from "vue";
+
+const { question } = defineProps(["question"]);
+
+const options = computed(() => {
+  return question.answers;
+});
+</script>
 
 <template>
   <!-- Question -->
   <div id="question-container">
-    <h1 class="question-title">What is 1 + 1</h1>
+    <h1 class="question-title">{{ question.text }}</h1>
   </div>
 
   <!-- Option answer -->
   <div id="options-container">
-    <div class="option">
-      <p class="option-label">A.</p>
-      <div class="option-value">1</div>
-    </div>
-    <div class="option">
-      <p class="option-label">B.</p>
-      <div class="option-value">2</div>
-    </div>
-    <div class="option">
-      <p class="option-label">C.</p>
-      <div class="option-value">10</div>
+    <div class="option" v-for="option in options" :key="option.id">
+      <p class="option-label">{{ option.label }}</p>
+      <div class="option-value">{{ option.text }}</div>
     </div>
   </div>
 </template>
