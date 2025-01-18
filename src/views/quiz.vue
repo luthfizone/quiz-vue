@@ -13,35 +13,20 @@ const quiz = quizes.find((quiz) => {
 
 const currentQuestionsIndex = ref(0);
 
-// const questionPage = ref(
-//   `${currentQuestionsIndex.value + 1} / ${quiz.questions.length}`
-// );
-
-// watch(
-//   () => currentQuestionsIndex.value,
-//   () =>
-//     (questionPage.value = `${currentQuestionsIndex.value + 1} / ${
-//       quiz.questions.length
-//     } `)
-// );
-
-// BEST PRACTICE USE THIS
-/**
- * karena menggunakan computed tidak di render ulang kalo gaada perubahan
- */
-
-/**
- * jika menggunakan watch maka lebih cocok untuk mengambil data API
- * atau triggernya dari luar state
- */
 const questionPage = computed(() => {
   return `${currentQuestionsIndex.value + 1} / ${quiz.questions.length}`;
+});
+
+const barPercentage = computed(() => {
+  return `${
+    ((currentQuestionsIndex.value + 1) / quiz.questions.length) * 100
+  }%`;
 });
 </script>
 
 <template>
   <!-- Header -->
-  <QuizHeader :questionPage="questionPage" />
+  <QuizHeader :questionPage="questionPage" :barPercentage="barPercentage" />
 
   <!-- Quiz content -->
   <QuizContent :question="quiz.questions[currentQuestionsIndex]" />
