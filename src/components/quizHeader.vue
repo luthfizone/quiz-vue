@@ -1,8 +1,12 @@
-<script setup></script>
+<script setup>
+const { questionPage } = defineProps(["questionPage"]);
+
+console.log(questionPage);
+</script>
 
 <template>
   <header>
-    <h4>Question 1/2</h4>
+    <h4>Question {{ questionPage }}</h4>
     <div class="bar">
       <div class="bar-progress"></div>
     </div>

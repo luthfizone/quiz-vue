@@ -1,7 +1,7 @@
 <script setup>
 import QuizContent from "@/components/quizContent.vue";
 import QuizHeader from "@/components/quizHeader.vue";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import quizes from "@/data/quiz.json";
 
@@ -12,14 +12,33 @@ const quiz = quizes.find((quiz) => {
 });
 
 const currentQuestionsIndex = ref(0);
+const questionPage = ref(
+  `${currentQuestionsIndex.value + 1} / ${quiz.questions.length}`
+);
+
+watch(
+  () => currentQuestionsIndex.value,
+  () =>
+    (questionPage.value = `${currentQuestionsIndex.value + 1} / ${
+      quiz.questions.length
+    } `)
+);
 </script>
 
 <template>
   <!-- Header -->
-  <QuizHeader />
+  <QuizHeader :questionPage="questionPage" />
 
   <!-- Quiz content -->
   <QuizContent :question="quiz.questions[currentQuestionsIndex]" />
+
+  <!-- just for hardcode (will remove later) -->
+  <button
+    @click="currentQuestionsIndex++"
+    :disabled="currentQuestionsIndex === quiz.questions.length - 1"
+  >
+    Next
+  </button>
 </template>
 
 <style scoped></style>
